@@ -24,7 +24,7 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-</header>
+<a style="position:relative; top:3px;" href="https://github.com/loopmode/bind"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
@@ -40,6 +40,8 @@
 <li>A matcher can be a string or a regular expression. Or a regular expression in a string - anything supported by <code>String.prototype.match</code></li>
 <li>You can pass any number of matchers, either as an array or as direct arguments to the <code>bind</code> function.</li>
 </ul>
+<p><br>
+Full documentation: <a href="https://loopmode.github.io/bind/">https://loopmode.github.io/bind/</a></p>
 <h2 id="default-matcher">Default matcher</h2><p>Out of the box, the function will bind all methods that have a name starting with <code>handle</code>.</p>
 <p>You are encouraged to use a naming convention like that (e.g. <code>handleClick</code>), because then you don&apos;t need to pass any arguments but the class instance itself:</p>
 <pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;

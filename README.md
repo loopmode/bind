@@ -6,6 +6,9 @@ A simple scope binding mechanism for javascript classes.
 -   A matcher can be a string or a regular expression. Or a regular expression in a string - anything supported by `String.prototype.match`
 -   You can pass any number of matchers, either as an array or as direct arguments to the `bind` function.
 
+<br/>
+Full documentation: [https://loopmode.github.io/bind/](https://loopmode.github.io/bind/)
+
 ## Default matcher
 
 Out of the box, the function will bind all methods that have a name starting with `handle`.
