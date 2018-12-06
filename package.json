@@ -1,0 +1,24 @@
+{
+  "name": "@loopmode/bind",
+  "version": "1.0.0",
+  "main": "lib/bind.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir lib --copy-files",
+    "lint": "eslint src",
+    "docs": "esdoc",
+    "prepublish": "yarn lint && rimraf lib/* && yarn docs && yarn build"
+  },
+  "devDependencies": {
+    "@loopmode/babel7-base": "^1.0.1"
+  },
+  "keywords": [
+    "bind",
+    "autobind",
+    "auto-bind",
+    "this",
+    "scope",
+    "event",
+    "handler"
+  ]
+}

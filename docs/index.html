@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | @loopmode/bind</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-bind">bind</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-loopmode-bind">@loopmode/bind</h1><p>A simple scope binding mechanism for javascript classes.</p>
+<ul>
+<li>Takes a class instance and a &quot;matcher&quot; to bind class methods with matching names to the instance.</li>
+<li>A matcher can be a string or a regular expression. Or a regular expression in a string - anything supported by <code>String.prototype.match</code></li>
+<li>You can pass any number of matchers, either as an array or as direct arguments to the <code>bind</code> function.</li>
+</ul>
+<h2 id="default-matcher">Default matcher</h2><p>Out of the box, the function will bind all methods that have a name starting with <code>handle</code>.</p>
+<p>You are encouraged to use a naming convention like that (e.g. <code>handleClick</code>), because then you don&apos;t need to pass any arguments but the class instance itself:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;
+
+export class Demo {
+    constructor() {
+        bind(this);
+        window.addEventListener(&apos;click&apos;, this.handleClick);
+    }
+    handleClick(event) {
+        console.log(&apos;handleClick&apos;, this, event);
+    }
+}</code>
+</code></pre>
+<h2 id="custom-matchers">Custom matchers</h2><p>You can also pass additional arguments to specify custom matchers:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;
+
+export class Demo {
+    constructor() {
+        bind(this, /^handle/, &apos;init&apos;);
+    }
+    init() {
+        window.addEventListener(&apos;click&apos;, this.handleClick);
+        window.addEventListener(&apos;change&apos;, this.handleChange);
+    }
+    destroy() {
+        window.removeEventListener(&apos;click&apos;, this.handleClick);
+        window.removeEventListener(&apos;change&apos;, this.handleChange);
+    }
+    handleClick(event) {
+        console.log(&apos;handleClick&apos;, this, event);
+    }
+    handleChange(event) {
+        console.log(&apos;handleChange&apos;, this, event);
+    }
+}
+
+const demo - new Demo();
+document.addEventListener(&apos;DOMContentLoaded&apos;, demo.init)</code>
+</code></pre>
+<p>Some more examples:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">bind(this, /^on/); // match `onClick`, `onChange` etc, using RegExp object
+
+bind(this, &apos;^on&apos;); // same as before, but with string regex
+
+bind(this, &apos;on&apos;); // string matcher, will match both `onClick` and e.g. `createBaboon`
+
+bind(this, &apos;on$&apos;); // Will match `createBaboon` but not `onClick`
+
+bind(this, /^handle/, /^on/); // Will match all methods starting with `handle` or `on`, multiple arguments
+
+bind(this, [/^handle/, /^on/]); // Same as before, but with a single array as argument
+
+bind(this, [/^handle/, &apos;renderConfirmDialog&apos;]); // Typical real-world-case, match handlers but also some specific render method that gets injected into a child</code>
+</code></pre>
+<h2 id="custom-wrapper">Custom wrapper</h2><p>In case you do have a naming convention, but it&apos;s not <code>handle*</code>, you should create your own module with a wrapper function that provides the appropriate matcher, and use that - without passing extra arguments.<br>
+For example, if you typically use <code>onEvent</code> rather than <code>handleEvent</code>, your own <code>bind</code> module might export this wrapper function:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;
+export default instance =&gt; bind(instance, /^on/);</code>
+</code></pre>
+<h2 id="react-components">React components</h2><p>You will not run into troubles with e.g. React components - lifecycle methods are not bound unless you defined an explicit matcher for that (e.g. <code>render</code> or <code>/^componentDid/</code> etc).</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import React from &apos;react&apos;;
+import bind from &apos;@loopmode/bind&apos;;
+
+export class bind extends React.Component {
+    state = {
+        clickCount: 0
+    };
+    constructor(props) {
+        super(props);
+        bind(this);
+    }
+    render() {
+        return &lt;button onClick={this.handleClick}&gt;click me&lt;/button&gt;;
+    }
+    handleClick(event) {
+        this.setState({ clickCount: this.state.clickCount + 1 });
+    }
+}</code>
+</code></pre>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
