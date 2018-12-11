@@ -1,12 +1,14 @@
 {
   "name": "@loopmode/bind",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/bind.js",
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir lib --copy-files",
     "lint": "eslint src",
+    "clean": "rm -rf lib",
     "docs": "esdoc",
+    "clean:docs": "rm -rf docs",
     "prepublish": "yarn lint && rimraf lib/* && yarn docs && yarn build"
   },
   "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",

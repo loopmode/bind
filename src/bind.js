@@ -1,23 +1,34 @@
 /**
- * Binds component instance methods.
+ * Binds object functions that match given conditions.
  *
- * Requires the component instance to be passed as first argument. Any additional arguments are optional and specify "matchers" for method/function names.<br/>
+ * Requires the component instance to be passed as first argument.
+ * Any additional arguments are optional and specify "matchers" for method/function names.
+ * A matcher can be either a string, regular expression, or function.
  *
- * - Any function on the instance with has a name that matches one of the arguments will be bound to the instance.
- * - The arguments may be either strings or regular expressions.
- * - The arguments will be flattened, so you can either pass them individually, or as one or more arrays.
- * - When called with just the instance as a single argument, the default matcher `/^handle/` will be used.
- *
- * @param {Object} component - the component instance
- * @param {...String|...RegExp} [matchKeys = [/^handle/]] - strings or regular expressions matching method names to bind
+ * @param {Object} target - the target object
+ * @param {...(String|RegExp|Function)} [matchers = /^handle/] - Any number of matchers against which to check
  */
-export default function bind(component, ...matchKeys) {
-    if (!matchKeys.length) {
-        matchKeys = [/^handle/];
+export default function bind(target, ...matchers) {
+    if (!matchers.length) {
+        matchers = [/^handle/];
+    } else {
+        // flatten arrays
+        matchers = [].concat(...matchers);
     }
-    Object.getOwnPropertyNames(component.constructor.prototype).forEach(property => {
-        if (matchKeys.some(matcher => property.match(matcher))) {
-            component[property] = component[property].bind(component);
+    Object.getOwnPropertyNames(target.constructor.prototype).forEach(property => {
+        const isMatch = matcher => {
+            if (matcher === '*') {
+                return true;
+            }
+            if (typeof matcher === 'function') {
+                return matcher(property);
+            }
+            if (property.match(matcher)) {
+                return true;
+            }
+        };
+        if (matchers.some(isMatch)) {
+            target[property] = target[property].bind(target);
         }
     });
 }

@@ -53,13 +53,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-bind">bind</a></span></span><span class="code" data-ice="signature">(component: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, matchKeys: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-bind">bind</a></span></span><span class="code" data-ice="signature">(target: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, matchers: ...(<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>))</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Binds component instance methods.</p>
+        <div data-ice="description"><p>Binds object functions that match given conditions.</p>
 </div>
       </div>
     </td>
@@ -81,25 +81,21 @@
     
     
     
-    <span class="code" data-ice="name">bind</span><span class="code" data-ice="signature">(component: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, matchKeys: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span>)</span>
+    <span class="code" data-ice="name">bind</span><span class="code" data-ice="signature">(target: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, matchers: ...(<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>))</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/bind.js.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/bind.js.html#lineNumber11">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import bind from &apos;<span><a href="file/src/bind.js.html#lineNumber14">@loopmode/bind/src/bind.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import bind from &apos;<span><a href="file/src/bind.js.html#lineNumber11">@loopmode/bind/src/bind.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Binds component instance methods.</p>
-<p>Requires the component instance to be passed as first argument. Any additional arguments are optional and specify &quot;matchers&quot; for method/function names.<br></p>
-<ul>
-<li>Any function on the instance with has a name that matches one of the arguments will be bound to the instance.</li>
-<li>The arguments may be either strings or regular expressions.</li>
-<li>The arguments will be flattened, so you can either pass them individually, or as one or more arrays.</li>
-<li>When called with just the instance as a single argument, the default matcher <code>/^handle/</code> will be used.</li>
-</ul>
+  <div data-ice="description"><p>Binds object functions that match given conditions.</p>
+<p>Requires the component instance to be passed as first argument.
+Any additional arguments are optional and specify &quot;matchers&quot; for method/function names.
+A matcher can be either a string, regular expression, or function.</p>
 </div>
 
   
@@ -113,18 +109,18 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">component</td>
+      <td data-ice="name" class="code" data-depth="0">target</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the component instance</p>
+      <td data-ice="description"><p>the target object</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">matchKeys</td>
-      <td data-ice="type" class="code">...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span></td>
+      <td data-ice="name" class="code" data-depth="0">matchers</td>
+      <td data-ice="type" class="code">...(<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span>|<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>)</td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default:  [/^handle/]</li></ul></td>
-      <td data-ice="description"><p>strings or regular expressions matching method names to bind</p>
+<li>default:  /^handle/</li></ul></td>
+      <td data-ice="description"><p>Any number of matchers against which to check</p>
 </td>
     </tr>
 </tbody>

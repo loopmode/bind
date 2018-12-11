@@ -1,13 +1,8 @@
 # @loopmode/bind
 
-A simple scope binding mechanism for javascript classes.
-
--   Takes a class instance and a "matcher" to bind class methods with matching names to the instance.
--   A matcher can be a string or a regular expression. Or a regular expression in a string - anything supported by `String.prototype.match`
--   You can pass any number of matchers, either as an array or as direct arguments to the `bind` function.
+A scope binding mechanism for javascript classes.
 
 <br/>
-Full documentation: [https://loopmode.github.io/bind/](https://loopmode.github.io/bind/)
 
 ## Default matcher
 
@@ -28,6 +23,11 @@ export class Demo {
     }
 }
 ```
+
+## Special matchers
+
+-   `*` bind all methods, regardless of their name
+-   A matcher can be afunction with the signature `matcher(name:String):Boolean`
 
 ## Custom matchers
 

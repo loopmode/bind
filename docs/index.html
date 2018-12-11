@@ -34,14 +34,8 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-loopmode-bind">@loopmode/bind</h1><p>A simple scope binding mechanism for javascript classes.</p>
-<ul>
-<li>Takes a class instance and a &quot;matcher&quot; to bind class methods with matching names to the instance.</li>
-<li>A matcher can be a string or a regular expression. Or a regular expression in a string - anything supported by <code>String.prototype.match</code></li>
-<li>You can pass any number of matchers, either as an array or as direct arguments to the <code>bind</code> function.</li>
-</ul>
-<p><br>
-Full documentation: <a href="https://loopmode.github.io/bind/">https://loopmode.github.io/bind/</a></p>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-loopmode-bind">@loopmode/bind</h1><p>A scope binding mechanism for javascript classes.</p>
+<p><br></p>
 <h2 id="default-matcher">Default matcher</h2><p>Out of the box, the function will bind all methods that have a name starting with <code>handle</code>.</p>
 <p>You are encouraged to use a naming convention like that (e.g. <code>handleClick</code>), because then you don&apos;t need to pass any arguments but the class instance itself:</p>
 <pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;
@@ -56,6 +50,10 @@ export class Demo {
     }
 }</code>
 </code></pre>
+<h2 id="special-matchers">Special matchers</h2><ul>
+<li><code>*</code> bind all methods, regardless of their name</li>
+<li>A matcher can be afunction with the signature <code>matcher(name:String):Boolean</code></li>
+</ul>
 <h2 id="custom-matchers">Custom matchers</h2><p>You can also pass additional arguments to specify custom matchers:</p>
 <pre><code class="lang-javascript"><code class="source-code prettyprint">import bind from &apos;@loopmode/bind&apos;;
 
