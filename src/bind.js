@@ -15,7 +15,7 @@ export default function bind(target, ...matchers) {
         // flatten arrays
         matchers = [].concat(...matchers);
     }
-    Object.getOwnPropertyNames(target.constructor.prototype).forEach(property => {
+    Object.getOwnPropertyNames(target.constructor.prototype.__proto__).forEach(property => {
         const isMatch = matcher => {
             if (matcher === '*') {
                 return true;

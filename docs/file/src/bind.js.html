@@ -52,7 +52,7 @@ export default function bind(target, ...matchers) {
         // flatten arrays
         matchers = [].concat(...matchers);
     }
-    Object.getOwnPropertyNames(target.constructor.prototype).forEach(property =&gt; {
+    Object.getOwnPropertyNames(target.constructor.prototype.__proto__).forEach(property =&gt; {
         const isMatch = matcher =&gt; {
             if (matcher === &apos;*&apos;) {
                 return true;

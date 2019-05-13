@@ -1,6 +1,6 @@
 {
   "name": "@loopmode/bind",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/bind.js",
   "license": "MIT",
   "scripts": {
@@ -9,17 +9,17 @@
     "clean": "rm -rf lib",
     "docs": "esdoc",
     "clean:docs": "rm -rf docs",
-    "prepublish": "yarn lint && rimraf lib/* && yarn docs && yarn build"
+    "prepublishOnly": "yarn lint && rimraf lib/* && yarn docs && yarn build"
   },
   "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
   "homepage": "https://loopmode.github.io/bind/",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/loopmode/bind"
+    "type": "git",
+    "url": "https://github.com/loopmode/bind"
   },
   "bugs": {
-    "url" : "https://github.com/loopmode/bind/issues",
-    "email" : "jovica.aleksic@loopmode.de"
+    "url": "https://github.com/loopmode/bind/issues",
+    "email": "jovica.aleksic@loopmode.de"
   },
   "keywords": [
     "bind",
