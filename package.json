@@ -1,18 +1,19 @@
 {
   "name": "@loopmode/bind",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "main": "lib/bind.js",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir lib --copy-files",
-    "lint": "eslint src",
+    "build": "tsc",
     "clean": "rm -rf lib",
-    "docs": "esdoc",
-    "clean:docs": "rm -rf docs",
-    "prepublishOnly": "yarn lint && rimraf lib/* && yarn docs && yarn build"
+    "docs": "typedoc --out docs/ src/",
+    "prepublishOnly": "yarn clean && yarn docs && yarn build"
   },
   "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
   "homepage": "https://loopmode.github.io/bind/",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/loopmode/bind"
@@ -31,6 +32,6 @@
     "handler"
   ],
   "devDependencies": {
-    "@loopmode/babel7-base": "^1.0.1"
+    "typescript": "^3.7.5"
   }
 }

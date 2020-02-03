@@ -1,22 +1,36 @@
-"use strict";
 /* eslint-disable @typescript-eslint/no-explicit-any  */
-Object.defineProperty(exports, "__esModule", { value: true });
+
+/**
+ * A pattern or function to match properties that should be bound.
+ * - The `*` asterisk string is a special matcher and means "bind all functions".
+ * - Strings and regular expressions will be matched as regular expressions.
+ * - A matcher function will receive the name of the property that holds a function value, and the target object itself.
+ *    It should return a boolean value for whether to bind the function to the target or not.
+ */
+export type Matcher =
+  | '*'
+  | string
+  | RegExp
+  | ((property: string, target: any) => boolean);
+
 /**
  * Default matcher for finding properties that should be bound.
  */
-exports.DEFAULT_MATCHER = /(^handle([A-Z]|_).+|^on[A-Z])/;
+export const DEFAULT_MATCHER = /(^handle([A-Z]|_).+|^on[A-Z])/;
+
 /**
  * Returns names of the own properties of a given object.
  * Unless the object is a plain javascript object, the properties of its constructor prototype are returned.
  *
  * @param target any object
  */
-function getTargetProperties(target) {
-    if (target.constructor && target.constructor !== Object) {
-        return Object.getOwnPropertyNames(target.constructor.prototype);
-    }
-    return Object.getOwnPropertyNames(target);
+function getTargetProperties(target: any) {
+  if (target.constructor && target.constructor !== Object) {
+    return Object.getOwnPropertyNames(target.constructor.prototype);
+  }
+  return Object.getOwnPropertyNames(target);
 }
+
 /**
  * Normalizes any number of given matchers or matcher arrays.
  * If no matchers are given, the default matchers are returned.
@@ -24,20 +38,16 @@ function getTargetProperties(target) {
  * @param matchers
  * @return A flattened array of matchers
  */
-function normalizeMatchers() {
-    var matchers = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        matchers[_i] = arguments[_i];
-    }
-    if (!matchers.length) {
-        // nothing provided, use default matcher
-        return [exports.DEFAULT_MATCHER];
-    }
-    else {
-        // flatten any provided arrays
-        return [].concat.apply([], matchers);
-    }
+function normalizeMatchers(...matchers: Matcher[]): Matcher[] {
+  if (!matchers.length) {
+    // nothing provided, use default matcher
+    return [DEFAULT_MATCHER];
+  } else {
+    // flatten any provided arrays
+    return [].concat(...(matchers as any[]));
+  }
 }
+
 /**
  * Checks if a given target property should be bound or not.
  *
@@ -46,21 +56,22 @@ function normalizeMatchers() {
  * @param property - the name of target property
  * @return `true` if the target property is a function and passes the matcher, `false` otherwise
  */
-function shouldBind(matcher, target, property) {
-    if (!property) {
-        return false;
-    }
-    if (typeof target[property] !== 'function') {
-        return false;
-    }
-    if (matcher === '*') {
-        return true;
-    }
-    if (typeof matcher === 'function') {
-        return matcher(property, target);
-    }
-    return property.match(matcher);
+function shouldBind(matcher: Matcher, target: any, property: any): boolean {
+  if (!property) {
+    return false;
+  }
+  if (typeof target[property] !== 'function') {
+    return false;
+  }
+  if (matcher === '*') {
+    return true;
+  }
+  if (typeof matcher === 'function') {
+    return matcher(property, target);
+  }
+  return property.match(matcher);
 }
+
 /**
  * Binds the scope of an object's functions to that object if the function names match given conditions.
  *
@@ -117,19 +128,14 @@ function shouldBind(matcher, target, property) {
  * }
  * ```
  */
-function bind(target) {
-    var matchers = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        matchers[_i - 1] = arguments[_i];
+export default function bind(target: any, ...matchers: Matcher[]): void {
+  const normalizedMatchers = normalizeMatchers(...matchers);
+  getTargetProperties(target).forEach(property => {
+    const isMatch = normalizedMatchers.some(matcher =>
+      shouldBind(matcher, target, property)
+    );
+    if (isMatch) {
+      target[property] = target[property].bind(target);
     }
-    var normalizedMatchers = normalizeMatchers.apply(void 0, matchers);
-    getTargetProperties(target).forEach(function (property) {
-        var isMatch = normalizedMatchers.some(function (matcher) {
-            return shouldBind(matcher, target, property);
-        });
-        if (isMatch) {
-            target[property] = target[property].bind(target);
-        }
-    });
+  });
 }
-exports.default = bind;

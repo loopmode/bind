@@ -6,7 +6,7 @@ A scope binding mechanism for javascript classes.
 
 ## Default matcher
 
-Out of the box, the function will bind all methods that have a name starting with `handle`.
+Out of the box, the function will bind all methods that have a name starting with `on` followed by uppercase character, or `handle` followed by either uppercase character or underscore.
 
 You are encouraged to use a naming convention like that (e.g. `handleClick`), because then you don't need to pass any arguments but the class instance itself:
 
@@ -27,7 +27,7 @@ export class Demo {
 ## Special matchers
 
 -   `*` bind all methods, regardless of their name
--   A matcher can be afunction with the signature `matcher(name:String):Boolean`
+-   A matcher can be a function that receives the function name and returns a boolean
 
 ## Custom matchers
 
